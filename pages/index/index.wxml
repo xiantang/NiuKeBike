@@ -3,4 +3,5 @@
   longitude='{{longitude}}'
   latitude='{{latitude}}'
   controls='{{controls}}'
+  show-location='true'
 ></map>
