@@ -103,6 +103,18 @@ Page({
   controltap: function(e) {
     var cid = e.controlId;
     switch (cid) {
+      case 0:
+      {
+        // 点击扫码
+          var status = getApp().globalData.status;
+          if(status==0){
+            //跳转到注册也页面
+            wx.navigateTo({
+              url: '../register/register',
+            })
+          } 
+        break
+      }
       case 1:
         {
           this.mapCtx.moveToLocation()
@@ -116,17 +128,26 @@ Page({
             success: function(res) {
               var log = res.longitude
               var lat = res.latitude
-              console.log(log)
-              console.log(lat)
-              bikes.push({
-                iconPath: '/images/bike@red.png',
-                width: 35,
-                height: 40,
-                longitude: log,
-                latitude: lat
-              })
-              that.setData({
-                markers: bikes
+              // bikes.push({
+              //   iconPath: '/images/bike@red.png',
+              //   width: 35,
+              //   height: 40,
+              //   longitude: log,
+              //   latitude: lat
+              // }) 
+              // that.setData({
+              //   markers: bikes
+              // })
+              wx.request({
+                url: 'http://localhost:8080/addBike',
+                data:{
+                  longitude:log,
+                  latitude:lat
+                },
+                method:'POST',
+                success:function(res){
+                  console.log(res)
+                }
               })
             }
 
@@ -137,19 +158,5 @@ Page({
         }
     }
   }
-  // },
-  // regionchange: function (e) {
-  //   var that = this
-  //   var etype = e.type;
-  //   if (etype == 'end') {
-  //     this.mapCtx.getCenterLocation({
-  //       success: function (res) {
-  //         that.setData({
-  //           logit: res.longitude,
-  //           latit: res.latitude
-  //         })
-  //       }
-  //     })
-  //   }
-  // }
+
 })
