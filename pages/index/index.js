@@ -3,6 +3,8 @@ Page({
     longitude: 0,
     latitude: 0,
     controls: [],
+    logit: 0,
+    latit: 0,
     markers: [
       // {
       //   iconPath:'/images/bike@red.png',
@@ -122,8 +124,8 @@ Page({
               iconPath: '/images/bike@red.png',
               width: 35,
               height: 40,
-              longitude: this.data.longitude,
-              latitude: this.data.latitude
+              longitude: this.data.logit,
+              latitude: this.data.latit
             }
           )
           this.setData({
@@ -144,8 +146,8 @@ Page({
           // console.log(res.longitude)
           // console.log(res.latitude)
           that.setData({
-            longitude:res.longitude,
-            latitude:res.latitude
+            logit: res.longitude,
+            latit: res.latitude
           })
         }
       })
