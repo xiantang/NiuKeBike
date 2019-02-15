@@ -98,6 +98,7 @@ Page({
           title: '已发送，请查收!',
           duration: 2000
         })
+        // console.log(res)
       }
     })
   },
@@ -107,58 +108,49 @@ Page({
     var verifyCode = e.detail.value.verifyCode;
     wx.request({
       url: 'http://localhost:8080/user/verify',
-      //POST的请求头是application/json,未来后台可以接受对应的参数，改变请求头
+    method:"POST",
       header: {
-        'content-type': 'application/x-www-form-urlencoded'
+        'content-type': 'application/x-www-form-urlencoded' 
       },
-      method: 'POST',
-      data: {
-        phoneNum: phoneNum,
-        verifyCode: verifyCode
-      },
-      success: function(res){
-        if(res.data){//校验成功
-          //将数据保存到mongodb中
+    data:{
+      phoneNum:phoneNum,
+      verifyCode:verifyCode
+    },
+    success:function(res){
+      if(res.data){
           wx.request({
             url: 'http://localhost:8080/user/register',
-            method: 'POST',
-            data: {
-              phoneNum: phoneNum,
-              regDate: new Date(),
-              status: 1
+            method:"POST",
+            // header: {
+            //   'content-type': 'application/x-www-form-urlencoded'
+            // },
+            data:{
+              phoneNum:phoneNum,
+              regDate:new Date()
             },
-            //跳转到充值押金页面
             success: function (res) {
-              if (res.data) {//跳转到充值押金页面
-                wx.navigateTo({
-                  url: '../deposit/deposit',
-                })
-                //记录用户状态，0：未注册，1：绑定完手机号，2：已实名认证
-                //更新getAPP().globalData中的数据，是更新到内存中的数据
-                getApp().globalData.status = 1
-                getApp().globalData.phoneNum = phoneNum
-                //将用户的信息保存到手机存储卡中
-                wx.setStorageSync('status', 1)
-                wx.setStorageSync("phoneNum", phoneNum)
-              } else {//用户信息保存失败
+              if(res.data){
+
+              }else{
                 wx.showModal({
                   title: '提示',
-                  content: '服务器端错误，请稍后再试！',
+                  content: '服务端错误，请稍后再试',
                 })
               }
+
             }
+
+            
           })
-          }else{//校验失败
-          wx.showModal({
-            title: '提示',
-            content: '您输入的验证码有误，请重新输入',
-            showCancel: false
-          })
-        }
+      }else{
+        wx.showModal({
+          title: '提示',
+          content: '输入的验证码有误！',
+        })
       }
+    }
     })
   }
-
 
 
 })

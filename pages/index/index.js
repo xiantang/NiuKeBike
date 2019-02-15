@@ -139,10 +139,11 @@ Page({
               //   markers: bikes
               // })
               wx.request({
-                url: 'http://localhost:8080/addBike',
+                url: 'http://localhost:8080/bike/add',
                 data:{
                   longitude:log,
-                  latitude:lat
+                  latitude:lat,
+                  bikeNo:1000
                 },
                 method:'POST',
                 success:function(res){
