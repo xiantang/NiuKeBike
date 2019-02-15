@@ -1,3 +1,5 @@
+var myUtil = require("../../utils/myUtil")
+
 Page({
   data: {
     longitude: 0,
@@ -106,11 +108,7 @@ Page({
       case 0:
       {
         // 点击扫码
-          var status = wx.getStorageSync("Status")
-          if (!status){
-            status = getApp().globalData.status;
-          }
-          
+          var status = myUtil.get("status")
           
           if(status==0){
             //跳转到注册也页面
