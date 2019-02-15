@@ -106,13 +106,23 @@ Page({
       case 0:
       {
         // 点击扫码
-          var status = getApp().globalData.status;
+          var status = wx.getStorageSync("Status")
+          if (!status){
+            status = getApp().globalData.status;
+          }
+          
+          
           if(status==0){
             //跳转到注册也页面
             wx.navigateTo({
               url: '../register/register',
             })
-          } 
+          }
+          else if(status ==1){
+            wx.navigateTo({
+              url: '../deposite/deposite',
+            })
+          }
         break
       }
       case 1:

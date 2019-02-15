@@ -130,7 +130,13 @@ Page({
             },
             success: function (res) {
               if(res.data){
-
+                wx.navigateTo({
+                  url: '../deposite/deposite',
+                })
+                // 记录用户信息 
+                // 0 未注册 1 绑定 2实名认证
+                getApp().globalData.status = 1 
+                wx.setStorageSync("Status",1)
               }else{
                 wx.showModal({
                   title: '提示',
