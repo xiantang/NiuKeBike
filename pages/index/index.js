@@ -109,7 +109,8 @@ Page({
       {
         // 点击扫码
           var status = myUtil.get("status")
-          
+
+          console.log(status)
           if(status==0){
             //跳转到注册也页面
             wx.navigateTo({

@@ -1,6 +1,6 @@
 // 查找的DATA
 function get(key) {
-    var status = wx.getStorageSync("Status")
+    var status = wx.getStorageSync(key)
     if (!status) {
         status = getApp().globalData[key];
     }

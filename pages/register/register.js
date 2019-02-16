@@ -74,7 +74,7 @@ Page({
   },
 
   inputPhoneNum: function (e) {
-    console.log(e)
+    // console.log(e)
     this.setData({
       phoneNum: e.detail.value
     })
@@ -84,7 +84,7 @@ Page({
     var index = this.data.countryCodeIndex;
     var countryCode = this.data.countryCodes[index];
     var phoneNum = this.data.phoneNum;
-    console.log(countryCode,phoneNum)
+    // console.log(countryCode,phoneNum)
     wx.request({
       //小程序访问的网络请求协议必须是https，url里面不能有端口号
       url: "http://localhost:8080/user/genCode",
@@ -136,7 +136,9 @@ Page({
                 // 记录用户信息 
                 // 0 未注册 1 绑定 2实名认证
                 getApp().globalData.status = 1 
-                wx.setStorageSync("Status",1)
+                getApp().globalData.phoneNum = phoneNum
+                wx.setStorageSync("status",1)
+                wx.setStorageSync("phoneNum",phoneNum)
               }else{
                 wx.showModal({
                   title: '提示',
