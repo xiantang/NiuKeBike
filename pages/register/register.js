@@ -126,7 +126,8 @@ Page({
             // },
             data:{
               phoneNum:phoneNum,
-              regDate:new Date()
+              regDate:new Date(),
+              status:1
             },
             success: function (res) {
               if(res.data){

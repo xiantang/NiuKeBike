@@ -26,22 +26,24 @@ Page({
           // console.log(myUtils.get("phoneNum"))
         wx.request({
           url: 'http://localhost:8080/user/deposite',
-          header: {
-            'content-type': 'application/x-www-form-urlencoded' 
-          },
+          
           method:"POST",
           data:{
               phoneNum:phoneNum,
-              deposit:299
+              deposit:299,
+              status:2
           },
           success:function(res){
             // 关闭充值中的加载对话框
             wx.hideLoading()
             if(res.data){
-              // wx.navigateTo({
-              //   url: '../deposite/deposite',
-              // })
+              wx.navigateTo({
+                url: '../identify/identify',
+              })
+              getApp().globalData.status = 2 
+              wx.setStorageSync("status",2)
             }
+            
           }
         })
         }

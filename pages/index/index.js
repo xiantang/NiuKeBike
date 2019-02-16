@@ -109,7 +109,7 @@ Page({
       {
         // 点击扫码
           var status = myUtil.get("status")
-
+          
           console.log(status)
           if(status==0){
             //跳转到注册也页面
@@ -121,6 +121,12 @@ Page({
             wx.navigateTo({
               url: '../deposite/deposite',
             })
+          }
+          else if(status == 2){
+            wx.navigateTo({
+              url: '../identify/identify',
+            })
+
           }
         break
       }

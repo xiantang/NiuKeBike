@@ -3,7 +3,8 @@
     "pages/index/index",
     "pages/logs/logs",
     "pages/register/register",
-    "pages/deposite/deposite"
+    "pages/deposite/deposite",
+    "pages/identify/identify"
   ],
   "permission": {
     "scope.userLocation": {
