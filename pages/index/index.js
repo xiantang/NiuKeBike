@@ -5,8 +5,6 @@ Page({
     longitude: 0,
     latitude: 0,
     controls: [],
-    logit: 0,
-    latit: 0,
     markers: []
   },
   onLoad: function() {
@@ -20,6 +18,7 @@ Page({
           longitude: log,
           latitude: lat
         })
+        findBikes(log,lat,that)
       },
     })
     wx.getSystemInfo({
@@ -156,13 +155,15 @@ Page({
               wx.request({
                 url: 'http://localhost:8080/bike/add',
                 data:{
-                  longitude:log,
-                  latitude:lat,
+                  location: [log,lat],
                   bikeNo:1000
                 },
                 method:'POST',
                 success:function(res){
-                  console.log(res)
+
+                  findBikes(log,lat,that)
+                  
+                
                 }
               })
             }
@@ -173,6 +174,50 @@ Page({
           break;
         }
     }
+  },
+  regionchange:function(e){
+
+    var that = this
+    var etype = e.type
+    if(etype=="end"){
+      this.mapCtx.getCenterLocation({
+        success:function(res){
+          var lat = res.latitude
+          var log = res.longitude
+          findBikes(log,lat,that)
+
+        }
+      })
+    }
   }
 
 })
+function findBikes(longitude,latitude,that){
+  wx.request({
+    url:"http://localhost:8080/bike/findNear",
+    method:"GET",
+    data:{
+      longitude:longitude,
+      latitude:latitude
+    },
+    success:function(res){
+      console.log(res)
+      var bikes = res.data.map((bike)=>{
+        return  {
+          longitude:bike.content.location[0],
+          latitude:bike.content.location[1],
+          width: 35,
+          height: 40,
+          iconPath:'/images/bike@red.png'
+        }
+      }
+      
+      )
+      that.setData({
+        markers:bikes
+      })
+    }
+  })
+
+
+}
